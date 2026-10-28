@@ -1,0 +1,9 @@
+{
+  "layerUrl": "",
+  "orderField": "ordre",
+  "nameField": "nom",
+  "anecdoteField": "anecdote",
+  "maxRounds": 5,
+  "perfectDistance": 50,
+  "maxDistance": 4000
+}
