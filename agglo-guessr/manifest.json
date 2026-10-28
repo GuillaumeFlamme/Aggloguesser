@@ -9,7 +9,5 @@
   "copyright": "",
   "license": "",
   "properties": {},
-  "dependency": [
-    "jimu-arcgis"
-  ]
+  "dependency": ["jimu-arcgis"]
 }
