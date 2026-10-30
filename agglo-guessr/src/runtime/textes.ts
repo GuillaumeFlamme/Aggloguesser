@@ -7,7 +7,7 @@ export const TEXTS = {
   title: 'DevineAgglo', // titre du jeu (écran d'accueil)
   loading: 'Chargement de DevineAgglo en cours', // message affiché pendant le chargement des photos et des points
   introText: (count: number): string => // texte de l'écran d'accueil, count est le nombre de manches
-    `${count} lieux de l’agglomération montargoise à retrouver. Observez la photo, placez votre pari sur la carte et gagnez des points selon votre précision.`,
+    `${count} lieux de l’agglomération montargoise à retrouver. Observez la photo, placez votre point sur la carte et gagnez des points selon votre précision.`,
   playButton: 'Jouer', // bouton de l'écran d'accueil
   mapNotConfigured: 'Carte non configurée', // bouton d'accueil quand aucune carte n'est choisie dans les réglages
   mapLoading: 'Chargement de la carte en cours', // bouton d'accueil tant que la carte n'est pas prête
@@ -18,11 +18,11 @@ export const TEXTS = {
   thumbAlt: 'Photo à retrouver', // texte alternatif de la vignette
   thumbLabel: 'Agrandir', // libellé sous la vignette
   thumbAria: 'Agrandir la photo', // description du bouton vignette (lecteurs d'écran)
-  hintNoGuess: 'Touchez la carte pour placer votre pari.', // aide quand aucun pari n'est posé
-  hintGuess: 'Vous pouvez déplacer votre pari.', // aide quand un pari est posé
+  hintNoGuess: 'Touchez la carte pour placer votre point.', // aide quand aucun pari n'est posé
+  hintGuess: 'Vous pouvez déplacer votre point.', // aide quand un pari est posé
   guessButton: 'Deviner', // bouton de validation du pari
   placeWas: 'C’était :', // texte devant le nom du lieu à la révélation
-  legendGuess: 'Votre pari', // légende du marqueur du joueur
+  legendGuess: 'Votre point', // légende du marqueur du joueur
   legendTruth: 'Le vrai lieu', // légende du marqueur du vrai lieu
   pointsSuffix: 'pts', // abréviation de "points"
   nextRound: 'Manche suivante', // bouton pour passer à la manche suivante
@@ -39,10 +39,10 @@ export const TEXTS = {
   myScore: 'Mon score', // titre du score dans l'image de score
   cardSubtitle: 'Agglomération montargoise', // sous-titre de l'image de score
   finalMessages: {
-    great: 'Impressionnant, vous connaissez l’agglo comme votre poche !', // score de 80 pour cent ou plus
-    good: 'Beau parcours, vous êtes un vrai connaisseur du territoire !', // score de 50 à 79 pour cent
-    ok: 'Pas mal du tout, l’agglo n’a presque plus de secrets pour vous !', // score de 25 à 49 pour cent
-    low: 'Merci d’avoir joué, il reste de belles choses à découvrir autour de vous !' // score de moins de 25 pour cent
+    great: 'Impressionnant', // score de 80 pour cent ou plus
+    good: 'Beau parcours', // score de 50 à 79 pour cent
+    ok: 'Pas mal du tout', // score de 25 à 49 pour cent
+    low: 'Merci d’avoir joué' // score de moins de 25 pour cent
   },
   errors: {
     needLayerUrl: 'Renseignez l’URL de la couche dans les paramètres du widget.', // aucune URL de couche dans les réglages
