@@ -5,7 +5,7 @@
 // Palette de couleurs utilisée partout : interface, marqueurs de la carte et image de score partagée.
 export const COLORS = {
   main: '#346fa5', // couleur principale : boutons "Jouer" et "Deviner", score, points gagnés, encart du builder
-  dark: '#0f4c5c', // bleu-vert foncé : titres, textes de la vignette, début du dégradé de l'image de score
+  dark: '#014380', // bleu-vert foncé : titres, textes de la vignette, début du dégradé de l'image de score
   ink: '#12303a', // couleur du texte principal
   muted: '#36525c', // couleur du texte secondaire (descriptions, aides)
   mutedLight: '#5b7680', // couleur du texte discret (petits libellés)
@@ -13,7 +13,7 @@ export const COLORS = {
   softRow: '#f1f7f5', // fond d'une ligne sur deux du récapitulatif des manches
   white: '#ffffff', // blanc : fond des fenêtres et texte sur fond coloré
   gold: '#ffd166', // doré : score et points sur l'image de score partagée
-  gradientEnd: '#1b8a6b', // fin du dégradé de fond de l'image de score partagée
+  gradientEnd: '#014380', // fin du dégradé de fond de l'image de score partagée
   danger: '#b42318', // texte rouge des messages d'erreur
   dangerBg: '#fee4e2', // fond rose des messages d'erreur
   overlay: 'rgba(8, 28, 36, 0.58)', // voile sombre derrière la photo en grand et les écrans d'accueil et de fin
