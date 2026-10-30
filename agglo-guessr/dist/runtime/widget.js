@@ -1,199 +1,346 @@
-System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},o={};return{setters:[function(e){a.React=e.React,a.ReactDOM=e.ReactDOM,a.css=e.css,a.jsx=e.jsx},function(e){o.JimuMapViewComponent=e.JimuMapViewComponent,o.loadArcGISJSAPIModules=e.loadArcGISJSAPIModules}],execute:function(){e((()=>{var e={826:e=>{"use strict";e.exports=o},891:e=>{"use strict";e.exports=a}},t={};function r(a){var o=t[a];if(void 0!==o)return o.exports;var n=t[a]={exports:{}};return e[a](n,n.exports,r),n.exports}r.d=(e,t)=>{for(var a in t)r.o(t,a)&&!r.o(e,a)&&Object.defineProperty(e,a,{enumerable:!0,get:t[a]})},r.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),r.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},r.p="";var n={};return r.p=window.jimuConfig.baseUrl,(()=>{"use strict";r.r(n),r.d(n,{__set_webpack_public_path__:()=>M,default:()=>j});var e=r(891),t=r(826);const a=e.css`
+System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},r={};return{setters:[function(e){a.React=e.React,a.ReactDOM=e.ReactDOM,a.css=e.css,a.jsx=e.jsx},function(e){r.JimuMapViewComponent=e.JimuMapViewComponent,r.loadArcGISJSAPIModules=e.loadArcGISJSAPIModules}],execute:function(){e((()=>{var e={826:e=>{"use strict";e.exports=r},891:e=>{"use strict";e.exports=a}},t={};function n(a){var r=t[a];if(void 0!==r)return r.exports;var o=t[a]={exports:{}};return e[a](o,o.exports,n),o.exports}n.d=(e,t)=>{for(var a in t)n.o(t,a)&&!n.o(e,a)&&Object.defineProperty(e,a,{enumerable:!0,get:t[a]})},n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),n.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.p="";var o={};return n.p=window.jimuConfig.baseUrl,(()=>{"use strict";n.r(o),n.d(o,{__set_webpack_public_path__:()=>he,default:()=>xe});var e=n(891),t=n(826);const a="#0f6b5c",r="#0f4c5c",i="#36525c",s="#5b7680",l="#ffffff",u="#ffd166",c="#b42318",d="#2563eb",p="#16a34a",g='system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',m=e.css`
+  /* Conteneur général : couvre toute la fenêtre mais laisse passer les clics vers la carte */
   .ag-root {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    pointer-events: none;
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    color: #12303a;
+    position: fixed; /* reste fixe par rapport à la fenêtre du navigateur */
+    top: 0; /* collé en haut */
+    right: 0; /* collé à droite */
+    bottom: 0; /* collé en bas */
+    left: 0; /* collé à gauche */
+    z-index: 2000; /* passe au-dessus de la carte et des autres widgets */
+    pointer-events: none; /* les clics traversent le conteneur (important pour pouvoir cliquer sur la carte) */
+    font-family: ${g}; /* police de caractères */
+    color: ${"#12303a"}; /* couleur du texte par défaut */
   }
-  .ag-root * { box-sizing: border-box; }
+  .ag-root * {
+    box-sizing: border-box; /* la largeur d'un élément inclut ses marges intérieures et sa bordure */
+  }
 
+  /* Éléments réellement cliquables : on réactive les clics uniquement sur eux */
   .ag-backdrop,
   .ag-header,
   .ag-thumb,
   .ag-bar,
   .ag-result,
-  .ag-toast { pointer-events: auto; }
+  .ag-toast {
+    pointer-events: auto; /* ces éléments reçoivent les clics */
+  }
 
+  /* Voile sombre plein écran (photo en grand, accueil, écran final) */
   .ag-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(8, 28, 36, 0.58);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
+    position: absolute; /* positionné dans le conteneur général */
+    top: 0; /* collé en haut */
+    right: 0; /* collé à droite */
+    bottom: 0; /* collé en bas */
+    left: 0; /* collé à gauche */
+    background: ${"rgba(8, 28, 36, 0.58)"}; /* couleur du voile (voir theme.ts) */
+    display: flex; /* disposition souple pour centrer le contenu */
+    align-items: center; /* centre verticalement */
+    justify-content: center; /* centre horizontalement */
+    padding: 16px; /* marge intérieure pour ne pas coller aux bords */
   }
 
+  /* Fenêtre blanche centrale (accueil et écran final) */
   .ag-card {
-    background: #fff;
-    border-radius: 22px;
-    padding: 28px 26px;
-    width: min(460px, 100%);
-    max-height: 100%;
-    overflow-y: auto;
-    text-align: center;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    background: ${l}; /* fond blanc */
+    border-radius: 22px; /* arrondi des coins */
+    padding: 28px 26px; /* marge intérieure : 28 en haut et en bas, 26 sur les côtés */
+    width: min(460px, 100%); /* largeur de 460 pixels au maximum */
+    max-height: 100%; /* ne dépasse jamais la hauteur de l'écran */
+    overflow-y: auto; /* défilement vertical si le contenu est trop long */
+    text-align: center; /* texte centré */
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35); /* ombre portée */
   }
-  .ag-card h1 { margin: 6px 0 10px; font-size: 30px; line-height: 1.1; }
-  .ag-card p { margin: 0 0 18px; font-size: 16px; line-height: 1.45; color: #36525c; }
-  .ag-logo { font-size: 44px; }
+  .ag-card h1 {
+    margin: 0 0 12px; /* espace sous le titre */
+    font-size: 30px; /* taille du titre */
+    line-height: 1.1; /* hauteur de ligne du titre */
+    color: ${r}; /* couleur du titre */
+  }
+  .ag-card p {
+    margin: 0 0 18px; /* espace sous le paragraphe */
+    font-size: 16px; /* taille du texte */
+    line-height: 1.45; /* hauteur de ligne */
+    color: ${i}; /* couleur du texte secondaire */
+  }
 
+  /* Boutons */
   .ag-btn {
-    appearance: none;
-    border: 0;
-    border-radius: 14px;
-    min-height: 50px;
-    padding: 0 22px;
-    font-size: 17px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.08s ease, opacity 0.15s ease;
+    appearance: none; /* supprime l'apparence par défaut du navigateur */
+    border: 0; /* pas de bordure */
+    border-radius: 14px; /* arrondi des coins */
+    min-height: 50px; /* hauteur minimale (assez grand pour un doigt) */
+    padding: 0 22px; /* marge intérieure sur les côtés */
+    font-size: 17px; /* taille du texte */
+    font-weight: 700; /* texte gras */
+    cursor: pointer; /* curseur en forme de main */
+    transition: transform 0.08s ease, opacity 0.15s ease; /* petites animations */
   }
-  .ag-btn:active:not(:disabled) { transform: scale(0.97); }
-  .ag-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-  .ag-btn-primary { background: #0f6b5c; color: #fff; }
-  .ag-btn-secondary { background: #e6f1ee; color: #0f4c5c; }
-  .ag-btn-block { width: 100%; }
+  .ag-btn:active:not(:disabled) {
+    transform: scale(0.97); /* léger rétrécissement au clic */
+  }
+  .ag-btn:disabled {
+    opacity: 0.45; /* bouton grisé quand il est inactif */
+    cursor: not-allowed; /* curseur d'interdiction */
+  }
+  .ag-btn-primary {
+    background: ${a}; /* fond du bouton principal */
+    color: ${l}; /* texte du bouton principal */
+  }
+  .ag-btn-secondary {
+    background: ${"#e6f1ee"}; /* fond du bouton secondaire */
+    color: ${r}; /* texte du bouton secondaire */
+  }
+  .ag-btn-block {
+    width: 100%; /* bouton sur toute la largeur */
+  }
 
+  /* Bandeau du haut : numéro de manche et score */
   .ag-header {
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.96);
-    border-radius: 999px;
-    padding: 8px 18px;
-    font-size: 15px;
-    font-weight: 700;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-    white-space: nowrap;
+    position: absolute; /* positionné dans le conteneur général */
+    top: 12px; /* distance du haut */
+    left: 50%; /* démarre au milieu de l'écran */
+    transform: translateX(-50%); /* recentre le bandeau sur son milieu */
+    background: ${l}; /* fond blanc */
+    border-radius: 999px; /* forme en pilule */
+    padding: 8px 18px; /* marge intérieure */
+    font-size: 15px; /* taille du texte */
+    font-weight: 700; /* texte gras */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); /* ombre portée */
+    white-space: nowrap; /* pas de retour à la ligne */
+  }
+  .ag-header span + span {
+    margin-left: 14px; /* espace entre le numéro de manche et le score */
+    color: ${a}; /* couleur du score */
   }
 
+  /* Photo en grand */
   .ag-photo-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 10px;
-    max-width: min(980px, 96vw);
-    cursor: pointer;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    background: ${l}; /* cadre blanc autour de la photo */
+    border-radius: 20px; /* arrondi des coins du cadre */
+    padding: 10px; /* épaisseur du cadre blanc */
+    max-width: min(980px, 96vw); /* largeur maximale du cadre */
+    cursor: pointer; /* curseur en forme de main */
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45); /* ombre portée */
   }
   .ag-photo-card img {
-    display: block;
-    max-width: 100%;
-    max-height: 70vh;
-    border-radius: 12px;
-    margin: 0 auto;
+    display: block; /* l'image se comporte comme un bloc */
+    max-width: 100%; /* ne dépasse pas la largeur du cadre */
+    max-height: 70vh; /* hauteur maximale : 70 pour cent de l'écran */
+    border-radius: 12px; /* arrondi des coins de la photo */
+    margin: 0 auto; /* centrée horizontalement */
   }
   .ag-photo-hint {
-    text-align: center;
-    padding: 10px 6px 4px;
-    font-weight: 700;
-    font-size: 15px;
-    color: #0f6b5c;
+    text-align: center; /* texte centré */
+    padding: 10px 6px 4px; /* marge intérieure */
+    font-weight: 700; /* texte gras */
+    font-size: 15px; /* taille du texte */
+    color: ${a}; /* couleur du texte */
   }
 
+  /* Vignette dans le coin */
   .ag-thumb {
-    position: absolute;
-    top: 64px;
-    right: 12px;
-    width: 220px;
-    padding: 4px;
-    border: 0;
-    border-radius: 14px;
-    background: #fff;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    position: absolute; /* positionnée dans le conteneur général */
+    top: 64px; /* distance du haut (sous le bandeau) */
+    right: 12px; /* distance du bord droit */
+    width: 220px; /* largeur de la vignette */
+    padding: 4px; /* épaisseur du cadre blanc */
+    border: 0; /* pas de bordure */
+    border-radius: 14px; /* arrondi des coins */
+    background: ${l}; /* fond blanc */
+    cursor: pointer; /* curseur en forme de main */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); /* ombre portée */
   }
   .ag-thumb img {
-    display: block;
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
+    display: block; /* l'image se comporte comme un bloc */
+    width: 100%; /* sur toute la largeur de la vignette */
+    height: 150px; /* hauteur de l'image */
+    object-fit: cover; /* l'image remplit l'espace en étant rognée si besoin */
+    border-radius: 10px; /* arrondi des coins */
   }
   .ag-thumb span {
-    display: block;
-    padding: 4px 0 2px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #0f4c5c;
+    display: block; /* libellé sur sa propre ligne */
+    padding: 4px 0 2px; /* marge intérieure */
+    font-size: 12px; /* taille du texte */
+    font-weight: 700; /* texte gras */
+    color: ${r}; /* couleur du texte */
   }
 
+  /* Barre du bas pendant le pari, et carte de résultat */
   .ag-bar,
   .ag-result {
-    position: absolute;
-    left: 50%;
-    bottom: 18px;
-    transform: translateX(-50%);
-    width: min(540px, calc(100% - 24px));
-    background: #fff;
-    border-radius: 18px;
-    padding: 14px 16px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    position: absolute; /* positionnée dans le conteneur général */
+    left: 50%; /* démarre au milieu de l'écran */
+    bottom: 18px; /* distance du bas */
+    transform: translateX(-50%); /* recentre sur son milieu */
+    width: min(540px, calc(100% - 24px)); /* largeur de 540 pixels au maximum */
+    background: ${l}; /* fond blanc */
+    border-radius: 18px; /* arrondi des coins */
+    padding: 14px 16px; /* marge intérieure */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35); /* ombre portée */
   }
-  .ag-bar { display: flex; align-items: center; gap: 14px; }
-  .ag-bar-hint { flex: 1; font-size: 14px; color: #36525c; line-height: 1.3; }
-  .ag-bar-notice { color: #b42318; font-weight: 600; }
+  .ag-bar {
+    display: flex; /* texte d'aide et bouton côte à côte */
+    align-items: center; /* alignés verticalement au centre */
+    gap: 14px; /* espace entre le texte et le bouton */
+  }
+  .ag-bar-hint {
+    flex: 1; /* le texte prend toute la place restante */
+    font-size: 14px; /* taille du texte */
+    color: ${i}; /* couleur du texte */
+    line-height: 1.3; /* hauteur de ligne */
+  }
+  .ag-bar-notice {
+    color: ${c}; /* texte rouge pour un message d'erreur */
+    font-weight: 600; /* texte semi-gras */
+  }
 
-  .ag-result { text-align: center; }
-  .ag-result-main { display: flex; align-items: baseline; justify-content: center; gap: 14px; margin-bottom: 6px; }
-  .ag-dist { font-size: 34px; font-weight: 800; }
-  .ag-pts { font-size: 20px; font-weight: 800; color: #0f6b5c; }
-  .ag-place { font-size: 16px; margin-bottom: 4px; }
-  .ag-anec { font-size: 14px; color: #36525c; line-height: 1.4; margin-bottom: 6px; }
-  .ag-legend { font-size: 12px; color: #5b7680; margin: 4px 0 10px; }
-  .ag-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px 0 10px; vertical-align: middle; }
-  .ag-dot-guess { background: #2563eb; }
-  .ag-dot-truth { background: #16a34a; }
+  /* Contenu de la carte de résultat */
+  .ag-result {
+    text-align: center; /* texte centré */
+  }
+  .ag-result-main {
+    display: flex; /* distance et points côte à côte */
+    align-items: baseline; /* alignés sur la ligne de texte */
+    justify-content: center; /* centrés horizontalement */
+    gap: 14px; /* espace entre distance et points */
+    margin-bottom: 6px; /* espace dessous */
+  }
+  .ag-dist {
+    font-size: 34px; /* taille de la distance */
+    font-weight: 800; /* texte très gras */
+  }
+  .ag-pts {
+    font-size: 20px; /* taille des points gagnés */
+    font-weight: 800; /* texte très gras */
+    color: ${a}; /* couleur des points gagnés */
+  }
+  .ag-place {
+    font-size: 16px; /* taille du nom du lieu */
+    margin-bottom: 4px; /* espace dessous */
+  }
+  .ag-anec {
+    font-size: 14px; /* taille de l'anecdote */
+    color: ${i}; /* couleur de l'anecdote */
+    line-height: 1.4; /* hauteur de ligne */
+    margin-bottom: 6px; /* espace dessous */
+  }
+  .ag-legend {
+    font-size: 12px; /* taille de la légende */
+    color: ${s}; /* couleur de la légende */
+    margin: 4px 0 10px; /* espace dessus et dessous */
+  }
+  .ag-legend-guess {
+    color: ${d}; /* couleur du mot "Votre pari" (même que le marqueur) */
+    font-weight: 700; /* texte gras */
+    margin-right: 14px; /* espace avant le mot suivant */
+  }
+  .ag-legend-truth {
+    color: ${p}; /* couleur du mot "Le vrai lieu" (même que le marqueur) */
+    font-weight: 700; /* texte gras */
+  }
 
+  /* Messages de chargement ou d'erreur */
   .ag-toast {
-    position: absolute;
-    left: 50%;
-    bottom: 24px;
-    transform: translateX(-50%);
-    background: #fff;
-    border-radius: 14px;
-    padding: 12px 18px;
-    font-weight: 600;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
-    max-width: calc(100% - 24px);
-    text-align: center;
+    position: absolute; /* positionné dans le conteneur général */
+    left: 50%; /* démarre au milieu de l'écran */
+    bottom: 24px; /* distance du bas */
+    transform: translateX(-50%); /* recentre sur son milieu */
+    background: ${l}; /* fond blanc */
+    border-radius: 14px; /* arrondi des coins */
+    padding: 12px 18px; /* marge intérieure */
+    font-weight: 600; /* texte semi-gras */
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3); /* ombre portée */
+    max-width: calc(100% - 24px); /* ne dépasse pas la largeur de l'écran */
+    text-align: center; /* texte centré */
   }
-  .ag-toast-error { background: #fee4e2; color: #b42318; }
+  .ag-toast-error {
+    background: ${"#fee4e2"}; /* fond rose pour une erreur */
+    color: ${c}; /* texte rouge pour une erreur */
+  }
 
-  .ag-score { font-size: 64px; font-weight: 800; color: #0f6b5c; line-height: 1; margin: 6px 0 14px; }
-  .ag-score small { font-size: 20px; font-weight: 600; color: #5b7680; }
-  .ag-recap { list-style: none; margin: 0 0 18px; padding: 0; text-align: left; }
+  /* Écran final */
+  .ag-score {
+    font-size: 64px; /* taille du score total */
+    font-weight: 800; /* texte très gras */
+    color: ${a}; /* couleur du score total */
+    line-height: 1; /* hauteur de ligne serrée */
+    margin: 6px 0 14px; /* espace dessus et dessous */
+  }
+  .ag-score small {
+    font-size: 20px; /* taille du "sur 25 000" */
+    font-weight: 600; /* texte semi-gras */
+    color: ${s}; /* couleur du "sur 25 000" */
+  }
+  .ag-recap {
+    list-style: none; /* pas de puces */
+    margin: 0 0 18px; /* espace dessous */
+    padding: 0; /* pas de marge intérieure */
+    text-align: left; /* texte aligné à gauche */
+  }
   .ag-recap li {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-size: 15px;
+    display: flex; /* manche, distance et points sur une ligne */
+    justify-content: space-between; /* répartis sur la largeur */
+    gap: 10px; /* espace entre les trois informations */
+    padding: 8px 12px; /* marge intérieure de la ligne */
+    border-radius: 10px; /* arrondi des coins */
+    font-size: 15px; /* taille du texte */
   }
-  .ag-recap li:nth-of-type(odd) { background: #f1f7f5; }
-  .ag-recap li span:last-of-type { font-weight: 700; color: #0f6b5c; }
-  .ag-actions { display: flex; flex-direction: column; gap: 10px; }
-  .ag-share-msg { margin: 12px 0 0 !important; font-size: 13px !important; }
+  .ag-recap li:nth-of-type(odd) {
+    background: ${"#f1f7f5"}; /* fond coloré une ligne sur deux */
+  }
+  .ag-recap li span:last-of-type {
+    font-weight: 700; /* points en gras */
+    color: ${a}; /* couleur des points */
+  }
+  .ag-actions {
+    display: flex; /* boutons les uns sous les autres */
+    flex-direction: column; /* disposition en colonne */
+    gap: 10px; /* espace entre les boutons */
+  }
+  .ag-share-msg {
+    margin: 12px 0 0 !important; /* espace au-dessus du message de partage */
+    font-size: 13px !important; /* taille du message de partage */
+  }
 
+  /* Adaptation aux écrans étroits (téléphone) : largeur de 640 pixels au maximum */
   @media (max-width: 640px) {
-    .ag-header { top: 8px; font-size: 14px; padding: 7px 14px; }
-    .ag-thumb { top: 54px; right: 8px; width: 116px; }
-    .ag-thumb img { height: 84px; }
-    .ag-thumb span { font-size: 11px; }
-    .ag-bar, .ag-result {
-      bottom: 0;
-      width: 100%;
-      border-radius: 20px 20px 0 0;
-      padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+    .ag-header {
+      top: 8px; /* bandeau plus près du haut */
+      font-size: 14px; /* texte du bandeau plus petit */
+      padding: 7px 14px; /* marge intérieure réduite */
     }
-    .ag-bar .ag-btn { min-width: 128px; }
-    .ag-dist { font-size: 30px; }
-    .ag-photo-card img { max-height: 62vh; }
-    .ag-card { padding: 22px 18px; }
-    .ag-score { font-size: 54px; }
+    .ag-thumb {
+      top: 54px; /* vignette plus près du haut */
+      right: 8px; /* vignette plus près du bord */
+      width: 116px; /* vignette plus petite */
+    }
+    .ag-thumb img {
+      height: 84px; /* image de la vignette plus petite */
+    }
+    .ag-thumb span {
+      font-size: 11px; /* libellé de la vignette plus petit */
+    }
+    .ag-bar,
+    .ag-result {
+      bottom: 0; /* panneau collé au bas de l'écran */
+      width: 100%; /* sur toute la largeur */
+      border-radius: 20px 20px 0 0; /* seuls les coins du haut sont arrondis */
+      padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); /* marge du bas tenant compte de la barre du téléphone */
+    }
+    .ag-bar .ag-btn {
+      min-width: 128px; /* le bouton Deviner reste assez large */
+    }
+    .ag-dist {
+      font-size: 30px; /* distance un peu plus petite */
+    }
+    .ag-photo-card img {
+      max-height: 62vh; /* photo un peu moins haute */
+    }
+    .ag-card {
+      padding: 22px 18px; /* marge intérieure réduite */
+    }
+    .ag-score {
+      font-size: 54px; /* score un peu plus petit */
+    }
   }
-`;const o=5e3;function i(e,t,a){return new Promise(((o,r)=>{const n=setTimeout((()=>r(new Error(a))),t);e.then((e=>{clearTimeout(n),o(e)}),(e=>{clearTimeout(n),r(e)}))}))}const l=6378137,s=Math.PI/180;function c(e,t,a){const o=Math.min(1,t/Math.max(e.naturalWidth,e.naturalHeight)),r=document.createElement("canvas");r.width=Math.max(1,Math.round(e.naturalWidth*o)),r.height=Math.max(1,Math.round(e.naturalHeight*o));const n=r.getContext("2d");return n?(n.drawImage(e,0,0,r.width,r.height),new Promise(((e,t)=>{r.toBlob((a=>{a?e(URL.createObjectURL(a)):t(new Error("Réduction impossible"))}),"image/jpeg",a)}))):Promise.reject(new Error("Canvas indisponible"))}function d(e){return t=this,a=void 0,r=function*(){try{const t=yield function(e){return new Promise(((t,a)=>{const o=new Image;o.crossOrigin="anonymous",o.onload=()=>t(o),o.onerror=()=>a(new Error("Image illisible")),o.src=e}))}(e);return{photoUrl:yield c(t,1600,.85),thumbUrl:yield c(t,480,.8)}}catch(t){return{photoUrl:e,thumbUrl:e}}},new((o=void 0)||(o=Promise))((function(e,n){function i(e){try{s(r.next(e))}catch(e){n(e)}}function l(e){try{s(r.throw(e))}catch(e){n(e)}}function s(t){var a;t.done?e(t.value):(a=t.value,a instanceof o?a:new o((function(e){e(a)}))).then(i,l)}s((r=r.apply(t,a||[])).next())}));var t,a,o,r}function g(e){return e<1e3?`${Math.round(e).toLocaleString("fr-FR")} m`:`${(e/1e3).toLocaleString("fr-FR",{maximumFractionDigits:1})} km`}function u(e){return e.toLocaleString("fr-FR")}function p(e,t){const a=t>0?e/t:0;return a>=.8?"Impressionnant, vous connaissez l’agglo comme votre poche !":a>=.5?"Beau parcours, vous êtes un vrai connaisseur du territoire !":a>=.25?"Pas mal du tout, l’agglo n’a presque plus de secrets pour vous !":"Merci d’avoir joué, il y a encore de belles choses à découvrir autour de vous !"}function x(e,t,a,o,r,n){e.beginPath(),e.moveTo(t+n,a),e.arcTo(t+o,a,t+o,a+r,n),e.arcTo(t+o,a+r,t,a+r,n),e.arcTo(t,a+r,t,a,n),e.arcTo(t,a,t+o,a,n),e.closePath()}var f=function(e,t,a,o){return new(a||(a=Promise))((function(r,n){function i(e){try{s(o.next(e))}catch(e){n(e)}}function l(e){try{s(o.throw(e))}catch(e){n(e)}}function s(e){var t;e.done?r(e.value):(t=e.value,t instanceof a?t:new a((function(e){e(t)}))).then(i,l)}s((o=o.apply(e,t||[])).next())}))};const m={type:"simple-marker",style:"circle",color:[37,99,235,1],size:16,outline:{color:[255,255,255,1],width:2.5}},h={type:"simple-marker",style:"circle",color:[22,163,74,1],size:18,outline:{color:[255,255,255,1],width:2.5}},b={type:"simple-line",color:[30,41,59,.9],width:2.5,style:"dash"},{useState:v,useEffect:y,useRef:w}=e.React,j=r=>{var n,c,j,M;const{config:k}=r,[S,z]=v(null),[R,N]=v(!1),[A,P]=v("loading"),[C,I]=v(""),[T,L]=v(""),[O,U]=v([]),[F,E]=v(0),[G,$]=v(!0),[W,_]=v(!1),[J,D]=v([]),[V,B]=v(!1),[q,H]=v(""),X=w(null),Q=w(null),K=w(null),Y=w(null),Z=e.React.useCallback((e=>z(e)),[]),ee=!!(null===(n=window.jimuConfig)||void 0===n?void 0:n.isInBuilder),te=0===(null!==(j=null===(c=r.useMapWidgetIds)||void 0===c?void 0:c.length)&&void 0!==j?j:0),ae=!!(null==S?void 0:S.view)&&R;y((()=>{let e=!1;return P("loading"),I(""),k.layerUrl?(f(void 0,void 0,void 0,(function*(){var a;try{const[a,o,r,n,l,s]=yield i((0,t.loadArcGISJSAPIModules)(["esri/layers/FeatureLayer","esri/Graphic","esri/layers/GraphicsLayer","esri/geometry/Point","esri/geometry/Polyline","esri/geometry/Extent"]),2e4,"Impossible de charger les modules ArcGIS (version de l’API incompatible ?).");if(e)return;X.current={FeatureLayer:a,Graphic:o,GraphicsLayer:r,Point:n,Polyline:l,Extent:s},N(!0);const c=new a({url:k.layerUrl});yield i(c.load(),25e3,"La couche ne répond pas : vérifiez l’URL et le partage de la couche.");const g=c.createQuery();g.where="1=1",g.outFields=["*"],g.returnGeometry=!0,g.outSpatialReference={wkid:4326};const u=yield i(c.queryFeatures(g),25e3,"La couche ne renvoie pas ses points : vérifiez son partage."),p=c.objectIdField,x=u.features.filter((e=>!!e.geometry)).sort(((e,t)=>(Number(e.attributes[k.orderField])||0)-(Number(t.attributes[k.orderField])||0))).slice(0,k.maxRounds||5),m=x.map((e=>e.attributes[p])),h=m.length>0?yield c.queryAttachments({objectIds:m}):{},b=x.map((e=>{var t,a,o,r,n;const i=null!==(t=h[e.attributes[p]])&&void 0!==t?t:[],l=null!==(a=i.find((e=>{var t;return(null!==(t=e.contentType)&&void 0!==t?t:"").startsWith("image/")})))&&void 0!==a?a:i[0];return{objectId:e.attributes[p],order:Number(e.attributes[k.orderField])||0,name:String(null!==(o=e.attributes[k.nameField])&&void 0!==o?o:""),anecdote:String(null!==(r=e.attributes[k.anecdoteField])&&void 0!==r?r:""),photoUrl:null!==(n=null==l?void 0:l.url)&&void 0!==n?n:"",thumbUrl:"",x:e.geometry.x,y:e.geometry.y}})).filter((e=>""!==e.photoUrl));if(e)return;if(0===b.length)throw new Error("Aucune manche trouvée : vérifiez que la couche contient des points avec une photo jointe.");const v=yield Promise.all(b.map((e=>f(void 0,void 0,void 0,(function*(){return Object.assign(Object.assign({},e),yield d(e.photoUrl))})))));if(e)return;U(v),D([]),E(0),P("intro")}catch(t){if(e)return;I(String(null!==(a=null==t?void 0:t.message)&&void 0!==a?a:t)),P("error")}})),()=>{e=!0}):(P("error"),void I("Renseignez l’URL de la couche dans les paramètres du widget."))}),[k.layerUrl,k.orderField,k.nameField,k.anecdoteField,k.maxRounds]),y((()=>{const e=null==S?void 0:S.view,t=X.current;if(!e||!t||!R)return;const a=new t.GraphicsLayer({listMode:"hide"});return e.map.add(a),K.current=a,e.when((()=>{Y.current=e.viewpoint.clone()})),()=>{e.map.remove(a),K.current=null}}),[S,R]),y((()=>{const e=null==S?void 0:S.view,t=X.current;if(!e||!t||!R||"playing"!==A)return;const a=e.popupEnabled;e.popupEnabled=!1;const o=e.on("immediate-click",(e=>{e.stopPropagation();const a=K.current;a&&(Q.current=e.mapPoint,a.removeAll(),a.add(new t.Graphic({geometry:e.mapPoint,symbol:m})),_(!0),L(""))}));return()=>{o.remove(),e.popupEnabled=a}}),[S,R,A]);const oe=()=>{const e=null==S?void 0:S.view;e&&Y.current&&e.goTo(Y.current,{animate:!1}).catch((()=>{}))},re=e=>{var t;null===(t=K.current)||void 0===t||t.removeAll(),Q.current=null,_(!1),L(""),E(e),$(!0),P("playing"),oe()},ne=J.reduce(((e,t)=>e+t.score),0),ie=O.length*o,le=O[F],se=J[J.length-1],ce=G&&("playing"===A||"result"===A)&&!!le,de=!(G||"playing"!==A&&"result"!==A||!le),ge=(0,e.jsx)("div",{className:"ag-root",css:a},"loading"===A&&(0,e.jsx)("div",{className:"ag-toast"},"Chargement d’AgglOguessr…"),"error"===A&&(0,e.jsx)("div",{className:"ag-toast ag-toast-error"},C),"intro"===A&&(0,e.jsx)("div",{className:"ag-backdrop"},(0,e.jsx)("div",{className:"ag-card"},(0,e.jsx)("div",{className:"ag-logo"},"📍"),(0,e.jsx)("h1",null,"AgglOguessr"),(0,e.jsx)("p",null,O.length," lieux de l’agglomération montargoise à retrouver. Observez la photo, placez votre pari sur la carte et gagnez des points selon votre précision."),(0,e.jsx)("button",{className:"ag-btn ag-btn-primary ag-btn-block",disabled:!ae,onClick:()=>re(0)},te?"Carte non configurée":ae?"Jouer":"Chargement de la carte…"))),("playing"===A||"result"===A)&&(0,e.jsx)("div",{className:"ag-header"},"Manche ",F+1,"/",O.length," · ",u(ne)," pts"),ce&&(0,e.jsx)("div",{className:"ag-backdrop",onClick:()=>$(!1)},(0,e.jsx)("div",{className:"ag-photo-card"},(0,e.jsx)("img",{src:le.photoUrl,alt:"Où cette photo a-t-elle été prise ?",decoding:"async"}),(0,e.jsx)("div",{className:"ag-photo-hint"},"Touchez pour afficher la carte"))),de&&(0,e.jsx)("button",{className:"ag-thumb",onClick:()=>$(!0),"aria-label":"Agrandir la photo"},(0,e.jsx)("img",{src:le.thumbUrl,alt:"Photo à retrouver",decoding:"async"}),(0,e.jsx)("span",null,"🔍 Agrandir")),"playing"===A&&!G&&(0,e.jsx)("div",{className:"ag-bar"},(0,e.jsx)("div",{className:"ag-bar-hint"+(T?" ag-bar-notice":"")},T||(W?"Vous pouvez déplacer votre pari.":"Touchez la carte pour placer votre pari.")),(0,e.jsx)("button",{className:"ag-btn ag-btn-primary",disabled:!W,onClick:()=>{var e;const t=null==S?void 0:S.view,a=X.current,r=K.current,n=Q.current,i=O[F];if(t&&a&&r&&n&&i)try{const e=t.spatialReference,c=function(e,t,a){return(null==a?void 0:a.isWebMercator)?{lon:e/l/s,lat:(2*Math.atan(Math.exp(t/l))-Math.PI/2)/s}:(null==a?void 0:a.isWGS84)||4326===(null==a?void 0:a.wkid)?{lon:e,lat:t}:null}(n.x,n.y,e),d=function(e,t,a){return(null==a?void 0:a.isWebMercator)?{x:e*s*l,y:Math.log(Math.tan(Math.PI/4+t*s/2))*l}:(null==a?void 0:a.isWGS84)||4326===(null==a?void 0:a.wkid)?{x:e,y:t}:null}(i.x,i.y,e);if(!c||!d)throw new Error("système de coordonnées de la carte non pris en charge (utilisez une carte en Web Mercator ou WGS84).");const g=function(e,t,a,o){const r=(t+o)/2*s,n=111132.92-559.82*Math.cos(2*r)+1.175*Math.cos(4*r),i=111412.84*Math.cos(r)-93.5*Math.cos(3*r)+.118*Math.cos(5*r);return Math.hypot((a-e)*i,(o-t)*n)}(c.lon,c.lat,i.x,i.y),u=function(e,t,a){if(e<=t)return o;if(a<=t||e>=a)return 0;const r=(e-t)/(a-t);return Math.round(o*(1-r)*(1-r))}(g,k.perfectDistance,k.maxDistance),p=new a.Point({x:d.x,y:d.y,spatialReference:e});r.add(new a.Graphic({geometry:new a.Polyline({paths:[[[n.x,n.y],[p.x,p.y]]],spatialReference:t.spatialReference}),symbol:b})),r.add(new a.Graphic({geometry:p,symbol:h}));const x=Math.min(n.x,p.x),f=Math.max(n.x,p.x),m=Math.min(n.y,p.y),v=Math.max(n.y,p.y),y=t.spatialReference.isGeographic?.004:400,w=(x+f)/2,j=(m+v)/2,M=Math.max(1.8*(f-x),y),S=Math.max(1.8*(v-m),y),z=new a.Extent({xmin:w-M/2,xmax:w+M/2,ymin:j-S/2-.35*S,ymax:j+S/2,spatialReference:t.spatialReference});t.goTo(z,{duration:900}).catch((()=>{})),D((e=>[...e,{distance:g,score:u}])),$(!1),P("result")}catch(t){L("Calcul impossible : "+String(null!==(e=null==t?void 0:t.message)&&void 0!==e?e:t))}}},"Deviner")),"result"===A&&!G&&se&&le&&(0,e.jsx)("div",{className:"ag-result"},(0,e.jsx)("div",{className:"ag-result-main"},(0,e.jsx)("span",{className:"ag-dist"},g(se.distance)),(0,e.jsx)("span",{className:"ag-pts"},"+",u(se.score)," pts")),le.name&&(0,e.jsx)("div",{className:"ag-place"},"C’était : ",(0,e.jsx)("strong",null,le.name)),le.anecdote&&(0,e.jsx)("div",{className:"ag-anec"},le.anecdote),(0,e.jsx)("div",{className:"ag-legend"},(0,e.jsx)("span",{className:"ag-dot ag-dot-guess"}),"Votre pari",(0,e.jsx)("span",{className:"ag-dot ag-dot-truth"}),"Le vrai lieu"),(0,e.jsx)("button",{className:"ag-btn ag-btn-primary ag-btn-block",onClick:()=>{var e;F+1>=O.length?(null===(e=K.current)||void 0===e||e.removeAll(),H(""),P("final"),oe()):re(F+1)}},F+1>=O.length?"Voir mon score":"Manche suivante")),"final"===A&&(0,e.jsx)("div",{className:"ag-backdrop"},(0,e.jsx)("div",{className:"ag-card"},(0,e.jsx)("div",{className:"ag-logo"},"🎉"),(0,e.jsx)("h1",null,"Bravo !"),(0,e.jsx)("p",null,p(ne,ie)),(0,e.jsx)("div",{className:"ag-score"},u(ne)," ",(0,e.jsx)("small",null,"/ ",u(ie))),(0,e.jsx)("ul",{className:"ag-recap"},J.map(((t,a)=>(0,e.jsx)("li",{key:a},(0,e.jsx)("span",null,"Manche ",a+1),(0,e.jsx)("span",null,g(t.distance)),(0,e.jsx)("span",null,u(t.score)," pts"))))),(0,e.jsx)("div",{className:"ag-actions"},(0,e.jsx)("button",{className:"ag-btn ag-btn-primary",disabled:V,onClick:()=>f(void 0,void 0,void 0,(function*(){var e;B(!0),H("");try{const t=yield function(e,t,a){const o=1080,r=1350,n=document.createElement("canvas");n.width=o,n.height=r;const i=n.getContext("2d");if(!i)return Promise.reject(new Error("Canvas indisponible"));const l='system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',s=i.createLinearGradient(0,0,o,r);s.addColorStop(0,"#0f4c5c"),s.addColorStop(1,"#1b8a6b"),i.fillStyle=s,i.fillRect(0,0,o,r),i.textAlign="center",i.fillStyle="#ffffff",i.font=`800 100px ${l}`,i.fillText("AgglOguessr",540,170),i.font=`400 40px ${l}`,i.globalAlpha=.85,i.fillText("Agglomération montargoise",540,230),i.globalAlpha=1,i.fillStyle="rgba(255,255,255,0.14)",x(i,90,290,900,400,36),i.fill(),i.fillStyle="#ffffff",i.font=`500 48px ${l}`,i.fillText("Mon score",540,370),i.fillStyle="#ffd166",i.font=`800 190px ${l}`,i.fillText(t.toLocaleString("fr-FR"),540,550),i.fillStyle="#ffffff",i.font=`400 44px ${l}`,i.fillText(`sur ${a.toLocaleString("fr-FR")} points`,540,625);const c=Math.min(100,440/Math.max(e.length,1));let d=740;return e.forEach(((e,t)=>{i.fillStyle="rgba(255,255,255,0.12)",x(i,90,d,900,c-14,22),i.fill();const a=d+(c-14)/2+15;i.fillStyle="#ffffff",i.font=`600 38px ${l}`,i.textAlign="left",i.fillText(`Manche ${t+1}`,130,a),i.textAlign="center",i.font=`400 38px ${l}`,i.fillText(g(e.distance),580,a),i.textAlign="right",i.fillStyle="#ffd166",i.font=`700 38px ${l}`,i.fillText(`${e.score.toLocaleString("fr-FR")} pts`,950,a),d+=c})),i.textAlign="center",i.fillStyle="#ffffff",i.font=`700 46px ${l}`,i.fillText("Bravo !",540,1235),i.font=`400 34px ${l}`,i.globalAlpha=.9,i.fillText(p(t,a).slice(0,62),540,1285),i.globalAlpha=1,new Promise(((e,t)=>{n.toBlob((a=>{a?e(a):t(new Error("Impossible de créer l’image"))}),"image/png")}))}(J,ne,ie),a=new File([t],"agglOguessr-score.png",{type:"image/png"}),o=navigator;if(null===(e=o.canShare)||void 0===e?void 0:e.call(o,{files:[a]}))yield o.share({files:[a],title:"AgglOguessr",text:`J’ai fait ${u(ne)} points sur AgglOguessr !`});else{const e=URL.createObjectURL(t),a=document.createElement("a");a.href=e,a.download="agglOguessr-score.png",document.body.appendChild(a),a.click(),document.body.removeChild(a),setTimeout((()=>URL.revokeObjectURL(e)),2e3),H("Image enregistrée dans vos téléchargements.")}}catch(e){"AbortError"!==(null==e?void 0:e.name)&&H("Impossible de créer l’image de score.")}finally{B(!1)}}))},V?"Création de l’image…":"Partager mon score"),(0,e.jsx)("button",{className:"ag-btn ag-btn-secondary",onClick:()=>{var e;null===(e=K.current)||void 0===e||e.removeAll(),Q.current=null,D([]),E(0),_(!1),H(""),P("intro"),oe()}},"Rejouer")),q&&(0,e.jsx)("p",{className:"ag-share-msg"},q))));return(0,e.jsx)("div",{className:"jimu-widget widget-agglo-guessr",style:{width:"100%",height:"100%"}},!te&&(0,e.jsx)(t.JimuMapViewComponent,{useMapWidgetId:null===(M=r.useMapWidgetIds)||void 0===M?void 0:M[0],onActiveViewChange:Z}),ee?(0,e.jsx)("div",{style:{padding:12,background:"#0f6b5c",color:"#fff",borderRadius:8,fontSize:13,lineHeight:1.5}},(0,e.jsx)("strong",null,"AgglOguessr"),(0,e.jsx)("br",null),te?"⚠ Choisissez une carte dans les paramètres.":"✓ Carte liée",(0,e.jsx)("br",null),"error"===A?"⚠ "+C:"loading"===A?"Chargement des données…":`✓ ${O.length} manche(s) chargée(s)`,(0,e.jsx)("br",null),(0,e.jsx)("em",null,"Le jeu s’affiche en mode Aperçu ou une fois publié.")):e.ReactDOM.createPortal(ge,document.body))};function M(e){r.p=e}})(),n})())}}}));
+`,x="AgglOguessr",h="Chargement d’AgglOguessr en cours",b=e=>`${e} lieux de l’agglomération montargoise à retrouver. Observez la photo, placez votre pari sur la carte et gagnez des points selon votre précision.`,f="Jouer",v="Carte non configurée",y="Chargement de la carte en cours",w=(e,t)=>`Manche ${e} sur ${t}`,j=e=>`Score : ${e} pts`,M="Où cette photo a-t-elle été prise ?",$="Touchez pour afficher la carte",k="Photo à retrouver",S="Agrandir",z="Agrandir la photo",N="Touchez la carte pour placer votre pari.",P="Vous pouvez déplacer votre pari.",R="Deviner",C="C’était :",A="Votre pari",L="Le vrai lieu",T="pts",E="Manche suivante",I="Voir mon score",U="Bravo !",F="Partager mon score",O="Création de l’image en cours",G="Rejouer",q="Image enregistrée dans vos téléchargements.",W="Impossible de créer l’image de score.",B=e=>`J’ai fait ${e} points sur AgglOguessr !`,V=e=>`Manche ${e}`,_=e=>`sur ${e} points`,D="Mon score",J="Agglomération montargoise",H={great:"Impressionnant, vous connaissez l’agglo comme votre poche !",good:"Beau parcours, vous êtes un vrai connaisseur du territoire !",ok:"Pas mal du tout, l’agglo n’a presque plus de secrets pour vous !",low:"Merci d’avoir joué, il reste de belles choses à découvrir autour de vous !"},X={needLayerUrl:"Renseignez l’URL de la couche dans les paramètres du widget.",modules:"Impossible de charger les modules ArcGIS (version de l’API incompatible ?).",layerTimeout:"La couche ne répond pas : vérifiez l’URL et le partage de la couche.",queryTimeout:"La couche ne renvoie pas ses points : vérifiez son partage.",noRounds:"Aucune manche trouvée : vérifiez que la couche contient des points avec une photo jointe.",badProjection:"Système de coordonnées de la carte non pris en charge (utilisez une carte en Web Mercator ou WGS84).",computeFailed:"Calcul impossible : "},Q={title:"AgglOguessr",mapLinked:"Carte liée",mapNotLinked:"Choisissez une carte dans les paramètres.",loading:"Chargement des données en cours",roundsLoaded:e=>`Manches chargées : ${e}`,previewHint:"Le jeu s’affiche en mode Aperçu ou une fois publié."};const K=5e3;function Y(e,t,a){return new Promise(((r,n)=>{const o=setTimeout((()=>n(new Error(a))),t);e.then((e=>{clearTimeout(o),r(e)}),(e=>{clearTimeout(o),n(e)}))}))}const Z=6378137,ee=Math.PI/180;function te(e){return e<1e3?`${Math.round(e).toLocaleString("fr-FR")} m`:`${(e/1e3).toLocaleString("fr-FR",{maximumFractionDigits:1})} km`}function ae(e){return e.toLocaleString("fr-FR")}function re(e,t){const a=t>0?e/t:0;return a>=.8?H.great:a>=.5?H.good:a>=.25?H.ok:H.low}function ne(e,t,a){const r=Math.min(1,t/Math.max(e.naturalWidth,e.naturalHeight)),n=document.createElement("canvas");n.width=Math.max(1,Math.round(e.naturalWidth*r)),n.height=Math.max(1,Math.round(e.naturalHeight*r));const o=n.getContext("2d");return o?(o.drawImage(e,0,0,n.width,n.height),new Promise(((e,t)=>{n.toBlob((a=>{a?e(URL.createObjectURL(a)):t(new Error("Réduction impossible"))}),"image/jpeg",a)}))):Promise.reject(new Error("Canvas indisponible"))}function oe(e){return t=this,a=void 0,n=function*(){try{const t=yield function(e){return new Promise(((t,a)=>{const r=new Image;r.crossOrigin="anonymous",r.onload=()=>t(r),r.onerror=()=>a(new Error("Image illisible")),r.src=e}))}(e);return{photoUrl:yield ne(t,1600,.85),thumbUrl:yield ne(t,480,.8)}}catch(t){return{photoUrl:e,thumbUrl:e}}},new((r=void 0)||(r=Promise))((function(e,o){function i(e){try{l(n.next(e))}catch(e){o(e)}}function s(e){try{l(n.throw(e))}catch(e){o(e)}}function l(t){var a;t.done?e(t.value):(a=t.value,a instanceof r?a:new r((function(e){e(a)}))).then(i,s)}l((n=n.apply(t,a||[])).next())}));var t,a,r,n}function ie(e,t,a,r,n,o){e.beginPath(),e.moveTo(t+o,a),e.arcTo(t+r,a,t+r,a+n,o),e.arcTo(t+r,a+n,t,a+n,o),e.arcTo(t,a+n,t,a,o),e.arcTo(t,a,t+r,a,o),e.closePath()}var se=function(e,t,a,r){return new(a||(a=Promise))((function(n,o){function i(e){try{l(r.next(e))}catch(e){o(e)}}function s(e){try{l(r.throw(e))}catch(e){o(e)}}function l(e){var t;e.done?n(e.value):(t=e.value,t instanceof a?t:new a((function(e){e(t)}))).then(i,s)}l((r=r.apply(e,t||[])).next())}))};const le={type:"simple-marker",style:"circle",color:d,size:16,outline:{color:l,width:2.5}},ue={type:"simple-marker",style:"circle",color:p,size:18,outline:{color:l,width:2.5}},ce={type:"simple-line",color:"#1e293b",width:2.5,style:"dash"},{useState:de,useEffect:pe,useRef:ge,useCallback:me}=e.React,xe=n=>{var o,i,s,c;const{config:d}=n,[p,H]=de(null),[ne,xe]=de(!1),[he,be]=de("loading"),[fe,ve]=de(""),[ye,we]=de(""),[je,Me]=de([]),[$e,ke]=de(0),[Se,ze]=de(!0),[Ne,Pe]=de(!1),[Re,Ce]=de([]),[Ae,Le]=de(!1),[Te,Ee]=de(""),Ie=ge(null),Ue=ge(null),Fe=ge(null),Oe=ge(null),Ge=ge(null),qe=me((e=>H(e)),[]),We=!!(null===(o=window.jimuConfig)||void 0===o?void 0:o.isInBuilder),Be=0===(null!==(s=null===(i=n.useMapWidgetIds)||void 0===i?void 0:i.length)&&void 0!==s?s:0),Ve=!!(null==p?void 0:p.view)&&ne;pe((()=>{var e;const t=Ie.current,a=null===(e=null==p?void 0:p.view)||void 0===e?void 0:e.container;if(!t||!a||We)return;const r=[],n=t.getBoundingClientRect();let o=t,i=0;for(;o&&o!==document.body&&i<8&&!o.contains(a);){const e=o.getBoundingClientRect();if(!(Math.abs(e.width-n.width)<2&&Math.abs(e.height-n.height)<2&&Math.abs(e.left-n.left)<2&&Math.abs(e.top-n.top)<2))break;o.style.pointerEvents="none",r.push(o),o=o.parentElement,i+=1}return()=>{r.forEach((e=>{e.style.pointerEvents=""}))}}),[p,We]),pe((()=>{let e=!1;return be("loading"),ve(""),d.layerUrl?(se(void 0,void 0,void 0,(function*(){var a;try{const[a,r,n,o,i,s]=yield Y((0,t.loadArcGISJSAPIModules)(["esri/layers/FeatureLayer","esri/Graphic","esri/layers/GraphicsLayer","esri/geometry/Point","esri/geometry/Polyline","esri/geometry/Extent"]),2e4,X.modules);if(e)return;Ue.current={FeatureLayer:a,Graphic:r,GraphicsLayer:n,Point:o,Polyline:i,Extent:s},xe(!0);const l=new a({url:d.layerUrl});yield Y(l.load(),25e3,X.layerTimeout);const u=l.createQuery();u.where="1=1",u.outFields=["*"],u.returnGeometry=!0,u.outSpatialReference={wkid:4326};const c=yield Y(l.queryFeatures(u),25e3,X.queryTimeout),p=l.objectIdField,g=c.features.filter((e=>!!e.geometry)).sort(((e,t)=>(Number(e.attributes[d.orderField])||0)-(Number(t.attributes[d.orderField])||0))).slice(0,d.maxRounds||5),m=g.map((e=>e.attributes[p])),x=m.length>0?yield l.queryAttachments({objectIds:m}):{},h=g.map((e=>{var t,a,r,n,o;const i=null!==(t=x[e.attributes[p]])&&void 0!==t?t:[],s=null!==(a=i.find((e=>{var t;return(null!==(t=e.contentType)&&void 0!==t?t:"").startsWith("image/")})))&&void 0!==a?a:i[0];return{objectId:e.attributes[p],order:Number(e.attributes[d.orderField])||0,name:String(null!==(r=e.attributes[d.nameField])&&void 0!==r?r:""),anecdote:String(null!==(n=e.attributes[d.anecdoteField])&&void 0!==n?n:""),photoUrl:null!==(o=null==s?void 0:s.url)&&void 0!==o?o:"",thumbUrl:"",x:e.geometry.x,y:e.geometry.y}})).filter((e=>""!==e.photoUrl));if(e)return;if(0===h.length)throw new Error(X.noRounds);const b=yield Promise.all(h.map((e=>se(void 0,void 0,void 0,(function*(){return Object.assign(Object.assign({},e),yield oe(e.photoUrl))})))));if(e)return;Me(b),Ce([]),ke(0),be("intro")}catch(t){if(e)return;ve(String(null!==(a=null==t?void 0:t.message)&&void 0!==a?a:t)),be("error")}})),()=>{e=!0}):(be("error"),void ve(X.needLayerUrl))}),[d.layerUrl,d.orderField,d.nameField,d.anecdoteField,d.maxRounds]),pe((()=>{const e=null==p?void 0:p.view,t=Ue.current;if(!e||!t||!ne)return;const a=new t.GraphicsLayer({listMode:"hide"});return e.map.add(a),Oe.current=a,e.when((()=>{Ge.current=e.viewpoint.clone()})),()=>{e.map.remove(a),Oe.current=null}}),[p,ne]),pe((()=>{const e=null==p?void 0:p.view,t=Ue.current;if(!e||!t||!ne||"playing"!==he)return;const a=e.popupEnabled;e.popupEnabled=!1;const r=e.on("immediate-click",(e=>{e.stopPropagation();const a=Oe.current;a&&(Fe.current=e.mapPoint,a.removeAll(),a.add(new t.Graphic({geometry:e.mapPoint,symbol:le})),Pe(!0),we(""))}));return()=>{r.remove(),e.popupEnabled=a}}),[p,ne,he]);const _e=()=>{const e=null==p?void 0:p.view;e&&Ge.current&&e.goTo(Ge.current,{animate:!1}).catch((()=>{}))},De=e=>{var t;null===(t=Oe.current)||void 0===t||t.removeAll(),Fe.current=null,Pe(!1),we(""),ke(e),ze(!0),be("playing"),_e()},Je=Re.reduce(((e,t)=>e+t.score),0),He=je.length*K,Xe=je[$e],Qe=Re[Re.length-1],Ke=Se&&("playing"===he||"result"===he)&&!!Xe,Ye=!(Se||"playing"!==he&&"result"!==he||!Xe),Ze=(0,e.jsx)("div",{className:"ag-root",css:m},"loading"===he&&(0,e.jsx)("div",{className:"ag-toast"},h),"error"===he&&(0,e.jsx)("div",{className:"ag-toast ag-toast-error"},fe),"intro"===he&&(0,e.jsx)("div",{className:"ag-backdrop"},(0,e.jsx)("div",{className:"ag-card"},(0,e.jsx)("h1",null,x),(0,e.jsx)("p",null,b(je.length)),(0,e.jsx)("button",{className:"ag-btn ag-btn-primary ag-btn-block",disabled:!Ve,onClick:()=>De(0)},Be?v:Ve?f:y))),("playing"===he||"result"===he)&&(0,e.jsx)("div",{className:"ag-header"},(0,e.jsx)("span",null,w($e+1,je.length)),(0,e.jsx)("span",null,j(ae(Je)))),Ke&&(0,e.jsx)("div",{className:"ag-backdrop",onClick:()=>ze(!1)},(0,e.jsx)("div",{className:"ag-photo-card"},(0,e.jsx)("img",{src:Xe.photoUrl,alt:M,decoding:"async"}),(0,e.jsx)("div",{className:"ag-photo-hint"},$))),Ye&&(0,e.jsx)("button",{className:"ag-thumb",onClick:()=>ze(!0),"aria-label":z},(0,e.jsx)("img",{src:Xe.thumbUrl,alt:k,decoding:"async"}),(0,e.jsx)("span",null,S)),"playing"===he&&!Se&&(0,e.jsx)("div",{className:"ag-bar"},(0,e.jsx)("div",{className:"ag-bar-hint"+(ye?" ag-bar-notice":"")},ye||(Ne?P:N)),(0,e.jsx)("button",{className:"ag-btn ag-btn-primary",disabled:!Ne,onClick:()=>{var e;const t=null==p?void 0:p.view,a=Ue.current,r=Oe.current,n=Fe.current,o=je[$e];if(t&&a&&r&&n&&o)try{const e=t.spatialReference,i=function(e,t,a){return(null==a?void 0:a.isWebMercator)?{lon:e/Z/ee,lat:(2*Math.atan(Math.exp(t/Z))-Math.PI/2)/ee}:(null==a?void 0:a.isWGS84)||4326===(null==a?void 0:a.wkid)?{lon:e,lat:t}:null}(n.x,n.y,e),s=function(e,t,a){return(null==a?void 0:a.isWebMercator)?{x:e*ee*Z,y:Math.log(Math.tan(Math.PI/4+t*ee/2))*Z}:(null==a?void 0:a.isWGS84)||4326===(null==a?void 0:a.wkid)?{x:e,y:t}:null}(o.x,o.y,e);if(!i||!s)throw new Error(X.badProjection);const l=function(e,t,a,r){const n=(t+r)/2*ee,o=111132.92-559.82*Math.cos(2*n)+1.175*Math.cos(4*n),i=111412.84*Math.cos(n)-93.5*Math.cos(3*n)+.118*Math.cos(5*n);return Math.hypot((a-e)*i,(r-t)*o)}(i.lon,i.lat,o.x,o.y),u=function(e,t,a){if(e<=t)return K;if(a<=t||e>=a)return 0;const r=(e-t)/(a-t);return Math.round(K*(1-r)*(1-r))}(l,d.perfectDistance,d.maxDistance),c=new a.Point({x:s.x,y:s.y,spatialReference:e});r.add(new a.Graphic({geometry:new a.Polyline({paths:[[[n.x,n.y],[c.x,c.y]]],spatialReference:e}),symbol:ce})),r.add(new a.Graphic({geometry:c,symbol:ue}));const p=Math.min(n.x,c.x),g=Math.max(n.x,c.x),m=Math.min(n.y,c.y),x=Math.max(n.y,c.y),h=e.isGeographic?.004:400,b=(p+g)/2,f=(m+x)/2,v=Math.max(1.8*(g-p),h),y=Math.max(1.8*(x-m),h),w=new a.Extent({xmin:b-v/2,xmax:b+v/2,ymin:f-y/2-.35*y,ymax:f+y/2,spatialReference:e});t.goTo(w,{duration:900}).catch((()=>{})),Ce((e=>[...e,{distance:l,score:u}])),ze(!1),be("result")}catch(t){we(X.computeFailed+String(null!==(e=null==t?void 0:t.message)&&void 0!==e?e:t))}}},R)),"result"===he&&!Se&&Qe&&Xe&&(0,e.jsx)("div",{className:"ag-result"},(0,e.jsx)("div",{className:"ag-result-main"},(0,e.jsx)("span",{className:"ag-dist"},te(Qe.distance)),(0,e.jsx)("span",{className:"ag-pts"},ae(Qe.score)," ",T)),Xe.name&&(0,e.jsx)("div",{className:"ag-place"},C," ",(0,e.jsx)("strong",null,Xe.name)),Xe.anecdote&&(0,e.jsx)("div",{className:"ag-anec"},Xe.anecdote),(0,e.jsx)("div",{className:"ag-legend"},(0,e.jsx)("span",{className:"ag-legend-guess"},A),(0,e.jsx)("span",{className:"ag-legend-truth"},L)),(0,e.jsx)("button",{className:"ag-btn ag-btn-primary ag-btn-block",onClick:()=>{var e;$e+1>=je.length?(null===(e=Oe.current)||void 0===e||e.removeAll(),Ee(""),be("final"),_e()):De($e+1)}},$e+1>=je.length?I:E)),"final"===he&&(0,e.jsx)("div",{className:"ag-backdrop"},(0,e.jsx)("div",{className:"ag-card"},(0,e.jsx)("h1",null,U),(0,e.jsx)("p",null,re(Je,He)),(0,e.jsx)("div",{className:"ag-score"},ae(Je)," ",(0,e.jsx)("small",null,_(ae(He)))),(0,e.jsx)("ul",{className:"ag-recap"},Re.map(((t,a)=>(0,e.jsx)("li",{key:a},(0,e.jsx)("span",null,V(a+1)),(0,e.jsx)("span",null,te(t.distance)),(0,e.jsx)("span",null,ae(t.score)," ",T))))),(0,e.jsx)("div",{className:"ag-actions"},(0,e.jsx)("button",{className:"ag-btn ag-btn-primary",disabled:Ae,onClick:()=>se(void 0,void 0,void 0,(function*(){var e;Le(!0),Ee("");try{const t=yield function(e,t,a){const n=1080,o=1400,i=document.createElement("canvas");i.width=n,i.height=o;const s=i.getContext("2d");if(!s)return Promise.reject(new Error("Canvas indisponible"));const c=s.createLinearGradient(0,0,n,o);c.addColorStop(0,r),c.addColorStop(1,"#1b8a6b"),s.fillStyle=c,s.fillRect(0,0,n,o),s.textAlign="center",s.fillStyle=l,s.font=`800 100px ${g}`,s.fillText(x,540,170),s.font=`400 40px ${g}`,s.globalAlpha=.85,s.fillText(J,540,230),s.globalAlpha=1,s.fillStyle="rgba(255,255,255,0.14)",ie(s,90,290,900,400,36),s.fill(),s.fillStyle=l,s.font=`500 48px ${g}`,s.fillText(D,540,370),s.fillStyle=u,s.font=`800 190px ${g}`,s.fillText(t.toLocaleString("fr-FR"),540,550),s.fillStyle=l,s.font=`400 44px ${g}`,s.fillText(_(a.toLocaleString("fr-FR")),540,625);const d=Math.min(100,440/Math.max(e.length,1));let p=740;return e.forEach(((e,t)=>{s.fillStyle="rgba(255,255,255,0.12)",ie(s,90,p,900,d-14,22),s.fill();const a=p+(d-14)/2+15;s.fillStyle=l,s.font=`600 38px ${g}`,s.textAlign="left",s.fillText(V(t+1),130,a),s.textAlign="center",s.font=`400 38px ${g}`,s.fillText(te(e.distance),580,a),s.textAlign="right",s.fillStyle=u,s.font=`700 38px ${g}`,s.fillText(`${e.score.toLocaleString("fr-FR")} ${T}`,950,a),p+=d})),s.textAlign="center",s.fillStyle=l,s.font=`700 46px ${g}`,s.fillText(U,540,1250),s.font=`400 34px ${g}`,s.globalAlpha=.9,function(e,t,a){const r=t.split(" "),n=[];let o="";return r.forEach((t=>{const a=o?`${o} ${t}`:t;e.measureText(a).width>880&&o?(n.push(o),o=t):o=a})),o&&n.push(o),n}(s,re(t,a)).slice(0,2).forEach(((e,t)=>{s.fillText(e,540,1300+44*t)})),s.globalAlpha=1,new Promise(((e,t)=>{i.toBlob((a=>{a?e(a):t(new Error("Impossible de créer l’image"))}),"image/png")}))}(Re,Je,He),a=new File([t],"agglOguessr-score.png",{type:"image/png"}),n=navigator;if(null===(e=n.canShare)||void 0===e?void 0:e.call(n,{files:[a]}))yield n.share({files:[a],title:x,text:B(ae(Je))});else{const e=URL.createObjectURL(t),a=document.createElement("a");a.href=e,a.download="agglOguessr-score.png",document.body.appendChild(a),a.click(),document.body.removeChild(a),setTimeout((()=>URL.revokeObjectURL(e)),2e3),Ee(q)}}catch(e){"AbortError"!==(null==e?void 0:e.name)&&Ee(W)}finally{Le(!1)}}))},Ae?O:F),(0,e.jsx)("button",{className:"ag-btn ag-btn-secondary",onClick:()=>{var e;null===(e=Oe.current)||void 0===e||e.removeAll(),Fe.current=null,Ce([]),ke(0),Pe(!1),Ee(""),be("intro"),_e()}},G)),Te&&(0,e.jsx)("p",{className:"ag-share-msg"},Te))));return(0,e.jsx)("div",{ref:Ie,className:"jimu-widget widget-agglo-guessr",style:{width:"100%",height:"100%",pointerEvents:We?"auto":"none"}},!Be&&(0,e.jsx)(t.JimuMapViewComponent,{useMapWidgetId:null===(c=n.useMapWidgetIds)||void 0===c?void 0:c[0],onActiveViewChange:qe}),We?(0,e.jsx)("div",{style:{padding:12,background:a,color:l,borderRadius:8,fontSize:13,lineHeight:1.5}},(0,e.jsx)("strong",null,Q.title),(0,e.jsx)("br",null),Be?Q.mapNotLinked:Q.mapLinked,(0,e.jsx)("br",null),"error"===he?fe:"loading"===he?Q.loading:Q.roundsLoaded(je.length),(0,e.jsx)("br",null),(0,e.jsx)("em",null,Q.previewHint)):e.ReactDOM.createPortal(Ze,document.body))};function he(e){n.p=e}})(),o})())}}}));
