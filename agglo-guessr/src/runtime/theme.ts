@@ -23,4 +23,4 @@ export const COLORS = {
 }
 
 // Police de caractères de tout le widget (liste de polices, la première disponible est utilisée).
-export const FONT_FAMILY = 'sans-serif'
+export const FONT_FAMILY = 'calibri'
