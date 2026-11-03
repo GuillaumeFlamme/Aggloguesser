@@ -129,8 +129,8 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
     top: 60px; /* sous le bandeau du haut */
     left: 50%; /* démarre au milieu de l'écran */
     transform: translateX(-50%); /* recentre sur son milieu */
-    width: 112px; /* diamètre du chronomètre */
-    height: 112px; /* diamètre du chronomètre */
+    width: 70px; /* diamètre du chronomètre */
+    height: 70px; /* diamètre du chronomètre */
     border-radius: 50%; /* forme ronde */
     background: ${"rgba(1, 40, 80, 0.88)"}; /* fond bleu nuit */
     box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4); /* ombre portée */
@@ -175,7 +175,7 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
   .ag-timer span {
     position: relative; /* au-dessus de l'anneau */
     color: ${l}; /* temps en blanc */
-    font-size: 38px; /* taille du temps */
+    font-size: 20px; /* taille du temps */
     font-weight: 800; /* texte très gras */
     font-variant-numeric: tabular-nums; /* chiffres de largeur fixe */
   }
