@@ -129,8 +129,8 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
     top: 60px; /* sous le bandeau du haut */
     left: 50%; /* démarre au milieu de l'écran */
     transform: translateX(-50%); /* recentre sur son milieu */
-    width: 70px; /* diamètre du chronomètre */
-    height: 70px; /* diamètre du chronomètre */
+    width: 100px; /* diamètre du chronomètre */
+    height: 100px; /* diamètre du chronomètre */
     border-radius: 50%; /* forme ronde */
     background: ${"rgba(1, 40, 80, 0.88)"}; /* fond bleu nuit */
     box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4); /* ombre portée */
