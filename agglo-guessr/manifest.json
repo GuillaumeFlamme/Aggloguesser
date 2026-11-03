@@ -2,7 +2,7 @@
   "name": "agglo-guessr",
   "label": "AgglOguessr",
   "type": "widget",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "exbVersion": "1.14.0",
   "author": "",
   "description": "GeoGuessr de l'agglomération montargoise : devinez où la photo a été prise.",

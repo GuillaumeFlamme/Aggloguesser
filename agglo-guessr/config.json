@@ -5,5 +5,15 @@
   "anecdoteField": "anecdote",
   "maxRounds": 5,
   "perfectDistance": 50,
-  "maxDistance": 4000
+  "maxDistance": 4000,
+  "timerEnabled": false,
+  "timerSeconds": 60,
+  "bonusEnabled": true,
+  "bonusSeconds": 30,
+  "bonusMaxPoints": 2500,
+  "lockView": true,
+  "lockMargin": 25,
+  "lockMaxZoomOut": 1.5,
+  "introImageUrl": "",
+  "cornerImageUrl": ""
 }
