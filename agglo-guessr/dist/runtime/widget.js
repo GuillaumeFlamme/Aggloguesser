@@ -277,13 +277,13 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
     font-size: 76px; /* grande étoile */
     line-height: 1; /* hauteur de ligne serrée */
     color: ${u}; /* étoile dorée */
-    text-shadow: 0 0 24px rgba(255, 209, 102, 0.85); /* halo doré */
     animation: ag-bonus-beat 1.2s ease-in-out infinite; /* l'étoile bat comme un coeur */
   }
   .ag-bonus-modal h2 {
     margin: 6px 0 12px; /* espaces autour du titre */
     font-size: 36px; /* taille du titre */
     font-weight: 900; /* texte très gras */
+    color : white;
     letter-spacing: 2px; /* lettres espacées */
     color: rgb(255, 255, 255 / 1.0); /* titre doré */
     animation: ag-bonus-title 0.9s ease-out both; /* le titre se resserre en arrivant */
