@@ -52,7 +52,7 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
   }
   .ag-card h1 {
     margin: 0 0 12px; /* espace sous le titre */
-    font-size: 30px; /* taille du titre */
+    font-size: 0px; /* taille du titre */
     line-height: 1.1; /* hauteur de ligne du titre */
     color: ${n}; /* couleur du titre */
   }
