@@ -324,6 +324,10 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
     position: absolute; /* positionnée dans le conteneur général */
     top: 12px; /* distance du haut */
     left: 12px; /* distance du bord gauche */
+    background: ${l}; /* fond blanc, pour rester lisible sur n'importe quelle carte */
+    border-radius: 14px; /* arrondi des coins */
+    padding: 6px 8px; /* marge intérieure */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); /* ombre portée */
     pointer-events: none; /* les clics traversent l'image pour atteindre la carte */
   }
   .ag-corner img {
@@ -564,6 +568,7 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
     .ag-corner {
       top: 52px; /* image du coin sous le bandeau (pour ne pas le chevaucher sur un petit écran) */
       left: 8px; /* image du coin plus près du bord */
+      padding: 4px 6px; /* marge intérieure réduite */
     }
     .ag-corner img {
       height: 36px; /* image du coin plus petite */
