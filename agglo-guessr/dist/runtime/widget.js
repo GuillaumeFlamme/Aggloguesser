@@ -324,7 +324,7 @@ System.register(["jimu-core","jimu-arcgis"],(function(e,t){var a={},n={};return{
     position: absolute; /* positionnée dans le conteneur général */
     top: 12px; /* distance du haut */
     left: 12px; /* distance du bord gauche */
-    background: ${l}; /* fond blanc, pour rester lisible sur n'importe quelle carte */
+    background: #014380; /* fond blanc, pour rester lisible sur n'importe quelle carte */
     border-radius: 14px; /* arrondi des coins */
     padding: 6px 8px; /* marge intérieure */
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); /* ombre portée */
